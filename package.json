@@ -1,0 +1,24 @@
+{
+  "name": "babyapp-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hekaahve/Babyapp-backend.git"
+  },
+  "author": "HA",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hekaahve/Babyapp-backend/issues"
+  },
+  "homepage": "https://github.com/hekaahve/Babyapp-backend#readme",
+  "dependencies": {
+    "express": "^4.18.0"
+  }
+}
