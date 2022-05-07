@@ -1,5 +1,9 @@
 const express = require('express')
 const app = express()
+const cors = require('cors')
+
+app.use(cors())
+app.use(express.json())
 
 let charts = [
     {id:1, age:"0",weight:3.950, name:"ninni"},
@@ -12,8 +16,8 @@ app.get('/', (req, res) => {
     res.send('<h1>Hello World!</h1>')
   })
 
-app.get('/api/charts',(req, res) => {
-    res.json(charts)
+app.get('/api/charts',(request, response) => {
+    response.json(charts)
   })
 
   app.get('/api/charts/:name&:age', (request, response) => {
@@ -42,6 +46,27 @@ app.get('/api/charts',(req, res) => {
     }
   })
 
+  app.post('/api/charts',(request, response) => {
+    const maxId = Math.floor(Math.random() * 100)
+    const chart = request.body
+
+    if (!body.content) {
+      return response.status(400).json({ 
+        error: 'content missing' 
+      })
+    }
+
+    /*const chart = new Chart({
+    age: body.age
+    name: body.name,
+    weight: body.weight,
+    id: maxId
+  })*/
+
+    console.log(chart)
+    response.json(chart)
+  })
+
   app.delete('/api/charts/:id', (request, response) => {
     const id = Number(request.params.id)
     charts = charts.filter(chart => chart.id !== id)
@@ -57,6 +82,13 @@ app.get('/api/charts',(req, res) => {
   })*/
 
 //finds match for certain weight & certain name
+
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint' })
+}
+
+//unknown errorhandling
+app.use(unknownEndpoint)
   
   const PORT = 3001
   app.listen(PORT, () => {
