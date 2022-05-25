@@ -10,8 +10,8 @@ POST http://localhost:3001/api/charts HTTP/1.1
 content-type: application/json
 
 {
-    "id":6, 
-    "age":"4", 
-    "weight":5.285, 
-    "name":"testiAPI"
+    "id":2, 
+    "age":"1", 
+    "weight":4.76, 
+    "name":"ninni"
 }

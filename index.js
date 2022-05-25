@@ -1,6 +1,9 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const cors = require('cors')
+const Chart = require('./models/chart')
+
 
 app.use(cors())
 app.use(express.json())
@@ -18,21 +21,25 @@ app.get('/', (req, res) => {
   })
 
 app.get('/api/charts',(request, response) => {
-    response.json(charts)
+    Chart.find({}).then(charts => {
+      response.json(charts)
+    })
   })
 
   app.get('/api/charts/:name&:age', (request, response) => {
     const name = String(request.params.name)
     const age = String(request.params.age)
     console.log(name)
-    const chart = charts.find(chart => chart.name === name && chart.age === age)
-    console.log(chart)
-    if (chart){
-      response.json(chart)
+
+    Chart.find(chart => chart.name === name && chart.age === age).then(chart =>{
       console.log(chart)
-    } else {
-      response.status(404).end()
-    }
+      if (chart){
+        response.json(chart)
+        console.log(chart)
+      } else {
+        response.status(404).end()
+      }
+    }) 
   })
 
 //finds all matches by name
@@ -47,22 +54,28 @@ app.get('/api/charts',(request, response) => {
     }
   })
 
-  app.post('/api/charts',(request, response) => {
+  app.post('/api/charts',(request, response, next) => {
     const maxId = Math.floor(Math.random() * 100)
-    const chart = request.body
+    const body = request.body
 
-    if (!body.content) {
+    if (!body) {
       return response.status(400).json({ 
         error: 'content missing' 
       })
     }
-
-    /*const chart = new Chart({
-    age: body.age
-    name: body.name,
-    weight: body.weight,
-    id: maxId
-  })*/
+    const chart = new Chart({
+      age: body.age,
+      name: body.name,
+      weight: body.weight,
+      id: maxId
+    })
+  
+  chart.save()
+    .then(savedChart => savedChart.toJSON())
+    .then(savedAndFormattedChart =>{
+      response.json(savedAndFormattedChart)
+    })
+    .catch(error => next(error))
 
     console.log(chart)
     response.json(chart)
@@ -91,7 +104,7 @@ const unknownEndpoint = (request, response) => {
 //unknown errorhandling
 app.use(unknownEndpoint)
   
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
   })
