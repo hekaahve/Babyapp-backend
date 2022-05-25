@@ -4,7 +4,8 @@ const cors = require('cors')
 
 app.use(cors())
 app.use(express.json())
-
+//TODO integrate to angular application. Continue from part 
+//Consuming our Express-API in an Angular Application
 let charts = [
     {id:1, age:"0",weight:3.950, name:"ninni"},
     {id:2, age:"1", weight:4.76, name:"ninni"},
@@ -90,7 +91,7 @@ const unknownEndpoint = (request, response) => {
 //unknown errorhandling
 app.use(unknownEndpoint)
   
-  const PORT = 3001
+const PORT = process.env.PORT || 3001
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
   })
