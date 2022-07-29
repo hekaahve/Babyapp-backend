@@ -17,7 +17,7 @@ app.get('/api/charts',(request, response) => {
       response.json(charts)
     })
   })
-//some problem, fix
+//some problem with the fletch, fix
   app.get('/api/charts/:name&:age', (request, response) => {
     const name = String(request.params.name)
     const age = String(request.params.age)
@@ -37,13 +37,15 @@ app.get('/api/charts',(request, response) => {
 //finds all matches by name
  app.get('/api/charts/:name',(request, response) => {
     const name = String(request.params.name)
-    const names = charts.filter(chart => chart.name === name);
 
-    if (names.length>0){
-      response.json(names)
-    } else {
-      response.status(404).end()
-    }
+    Chart.find({name}).then(charts => {
+      if (charts) {
+        response.json(charts)
+      } else {
+        response.status(404).end()
+      }
+      
+    })
   })
 
   app.post('/api/charts',(request, response, next) => {
