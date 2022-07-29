@@ -1,6 +1,6 @@
 GET http://localhost:3001/api/charts HTTP/1.1
 ###
-GET http://localhost:3001/api/charts/ninni HTTP/1.1
+GET http://localhost:3001/api/charts/2SD HTTP/1.1
 ###
 GET http://localhost:3001/api/charts/ninni&1 HTTP/1.1
 ###
@@ -10,8 +10,7 @@ POST http://localhost:3001/api/charts HTTP/1.1
 content-type: application/json
 
 {
-    "id":2, 
     "age":"1", 
-    "weight":4.76, 
-    "name":"ninni"
+    "weight":5.6, 
+    "name":"2SD"
 }

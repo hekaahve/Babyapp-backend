@@ -7,14 +7,6 @@ const Chart = require('./models/chart')
 
 app.use(cors())
 app.use(express.json())
-//TODO integrate to angular application. Continue from part 
-//Consuming our Express-API in an Angular Application
-let charts = [
-    {id:1, age:"0",weight:3.950, name:"ninni"},
-    {id:2, age:"1", weight:4.76, name:"ninni"},
-    {id:3, age:"2", weight:5.285, name:"ninni"},
-    {id:4, age:"2", weight:5.285, name:"testi"}
-]
 
 app.get('/', (req, res) => {
     res.send('<h1>Hello World!</h1>')
@@ -25,7 +17,7 @@ app.get('/api/charts',(request, response) => {
       response.json(charts)
     })
   })
-
+//some problem, fix
   app.get('/api/charts/:name&:age', (request, response) => {
     const name = String(request.params.name)
     const age = String(request.params.age)
@@ -66,8 +58,7 @@ app.get('/api/charts',(request, response) => {
     const chart = new Chart({
       age: body.age,
       name: body.name,
-      weight: body.weight,
-      id: maxId
+      weight: body.weight
     })
   
   chart.save()
